@@ -1,4 +1,5 @@
 #!/bin/bash
+[ -n "$DEBUG" ] && set -x
 set -e
 
 #
@@ -45,9 +46,14 @@ make build-all
 echo "# up all services"
 make up-all
 make test-up-design
+make test-up-dkumonitor
 
 echo "# test all services"
-test_app "make test-all"
+test_app "make test-design"
+test_app "make test-automation"
+test_app "make test-apideployer"
+test_app "make test-api"
+test_app "make test-dkumonitor DEBUG=true"
 
 echo "# clean env"
 make down clean-data-dir
