@@ -46,7 +46,7 @@ make build-all
 echo "# up all services"
 make up-all
 make test-up-design
-make test-up-dkumonitor
+make test-up-dkumonitor DEBUG=true
 
 echo "# test all services"
 test_app "make test-design"
