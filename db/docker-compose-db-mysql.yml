@@ -17,7 +17,7 @@ services:
     environment:
       - http_proxy=${http_proxy}
       - https_proxy=${https_proxy}
-      - no_proxy=${no_proxy},dkumonitor
+      - no_proxy=${no_proxy}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-changeme}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-dss}
       - MYSQL_USER=${MYSQL_USER:-dssuser}

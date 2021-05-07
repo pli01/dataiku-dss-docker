@@ -1,0 +1,8 @@
+version: '3.5'
+
+services:
+  mysql:
+    volumes:
+      - dbmysql:/var/lib/mysql
+volumes:
+  dbmysql:

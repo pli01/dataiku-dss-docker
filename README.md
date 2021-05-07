@@ -1,11 +1,15 @@
 # Dataiku dss multi node docker-compose
 
-This stack includes the following dataiku services
+[![CI](https://github.com/pli01/dataiku-dss-docker/actions/workflows/main.yml/badge.svg)](https://github.com/pli01/dataiku-dss-docker/actions/workflows/main.yml)
+
+## Description
+This docker-compose stack includes the following dataiku services
 * design node (default)
 * automation node
 * apideployer node
 * api node
 * dkumonitor: Graphite/Grafana stack (optional)
+* sample db
 
 Added Features:
 * Add custom docker image based on official dataiku/dss image
@@ -24,8 +28,9 @@ Sources:
 * [requirements for debian](https://doc.dataiku.com/dss/latest/installation/custom/initial-install.html#debian-ubuntu-linux-distributions)
 * [dkumonitor](https://github.com/dataiku/dkumonitor)
 
-Versions (from `Makefile.mk`):
-| Image | Version | Comment | 
+## Versions
+(From `Makefile.mk`)
+| Package | Version | Comment | 
 | --- | --- | --- |
 | dataiku/dss | 8.0.2 | official docker dss is 8.0.2 |
 | debian dataiku/dss | >= 8.0.2 | debian docker dataiku/dss support 8.0.2, and last version is 8.0.7 or 9.0.2 |
@@ -57,13 +62,15 @@ Notes:
    - dataiku/dss:8.0.2
    - official dataiku archive is 8.0.7 and 9.0.2
 
-# Usage
+## Usage
+
+### customization
 
 * (opt) create `artifacts` to override default `Makefile.mk` value (ex: COMPOSE_PROJECT_NAME, DESIGN_PORT,...)
 * (opt) create `docker-compose-custom.yml` to override default value (ex: license path file) (see sample)
 * (opt) create `docker-compose-custom-db-XXX.yml` to override default value of `docker-compose-db-XXX.yml`
 
-## Prereq: Build custom dss image
+### Prereq: Build custom dss image
 Image are  prefixed with `COMPOSE_PROJECT_NAME`_dataiku_dss
 2 options:
 * step build a custom docker image based on official dataiku/dss image.
@@ -75,13 +82,13 @@ Image are  prefixed with `COMPOSE_PROJECT_NAME`_dataiku_dss
 | build a debian customized dataiku/dss | `make build-debian` |
 | build dkumonitor | `make build-dkumonitor` |
 
-## start all services (design,automation,api,apideployer,dkumonitor)
+### start all services (design,automation,api,apideployer,dkumonitor)
 | Description |  command |
 | --- | --- |
 | start all nodes | `make up` |
 | stop all nodes | `make down` |
 
-## start only one service
+### start only one service
 | Description |  command |
 | --- | --- |
 | start design node | `make up-design` |
@@ -94,8 +101,11 @@ Image are  prefixed with `COMPOSE_PROJECT_NAME`_dataiku_dss
 | stop api node | `make down-api` |
 | start dkumonitor node | `make up-dkumonitor` |
 | stop dkumonitor node | `make down-dkumonitor` |
+| --- | --- |
+| start mysql node | `make start-db-mysql` |
+| stop mysql node | `make down-db-mysql` |
 
-## test service is running
+### test service is running
 | Description |  command |
 | --- | --- |
 | test all services | `make test-all` |

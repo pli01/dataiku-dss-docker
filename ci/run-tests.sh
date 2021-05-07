@@ -41,6 +41,7 @@ DKUMONITOR_DATADIR=data-dkumonitor
 EOF
 # ci config
 cp docker-compose-ci.yml docker-compose-custom.yml
+cp docker-compose-ci-db-mysql.yml docker-compose-custom-db-mysql.yml
 
 echo "# config"
 make config
@@ -53,6 +54,7 @@ make build-all
 
 echo "# up db-mysql service"
 make up-db-mysql
+
 echo "# up all dss services"
 make up-all
 make test-up-design   
