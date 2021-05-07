@@ -42,6 +42,7 @@ EOF
 # ci config
 cp docker-compose-ci.yml docker-compose-custom.yml
 cp docker-compose-ci-db-mysql.yml docker-compose-custom-db-mysql.yml
+cp docker-compose-ci-db-postgres.yml docker-compose-custom-db-postgres.yml
 
 echo "# config"
 make config
@@ -52,9 +53,6 @@ make down clean-data-dir
 echo "# build image"
 make build-all
 
-echo "# up db-mysql service"
-make up-db-mysql
-
 echo "# up all dss services"
 make up-all
 make test-up-design   
@@ -64,5 +62,17 @@ echo "# test all services"
 test_app "make test-all"
 
 echo "# clean env"
+make down clean-data-dir
+
+echo "# up db service"
+make up-db-mysql
+make up-db-postgres
+
+echo "# write dss tests"
+
+echo "# clean db service"
 make down-db-mysql clean-data-dir-db-mysql
+make down-db-postgres clean-data-dir-db-postgres
+
+echo "# clean env"
 make down clean-data-dir

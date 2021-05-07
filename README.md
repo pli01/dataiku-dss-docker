@@ -12,7 +12,7 @@ This docker-compose stack includes the following dataiku services
 * sample db
 
 Added Features:
-* Add custom docker image based on official dataiku/dss image
+* Add extended centos based official docker dataiku/dss
 * Add custom debian docker image based on official dataiku requirements
 * Add DSS_INSTALL_ARGS variables in docker entrypoint (run.sh) to configure:
   + install node type (-t option for installer.sh)
@@ -38,6 +38,7 @@ Sources:
 | jdbc vertica | 10.1.1-0 | |
 | jdbc mysql | 8.0.24 | |
 | mysql | 8.0.24 | |
+| postgres | 12.6 | |
 
 Notes:
  * api node need specific license
@@ -78,7 +79,7 @@ Image are  prefixed with `COMPOSE_PROJECT_NAME`_dataiku_dss
 
 | Description |  command |
 | --- | --- |
-| build a centos derivated based on official docker dataiku/dss | `make build` |
+| build the extended centos based official docker dataiku/dss | `make build` |
 | build a debian customized dataiku/dss | `make build-debian` |
 | build dkumonitor | `make build-dkumonitor` |
 

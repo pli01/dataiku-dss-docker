@@ -23,4 +23,4 @@ services:
       - MYSQL_USER=${MYSQL_USER:-dssuser}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-dsschangeme}
     ports:
-      - ${MYSQL_PORT:-3306}:3306
+      - "${MYSQL_PORT:-3306}:3306"

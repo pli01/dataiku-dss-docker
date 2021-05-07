@@ -1,0 +1,27 @@
+version: '3.5'
+
+networks:
+  dss-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+
+services:
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12.6}
+    container_name: ${COMPOSE_PROJECT_NAME}_db_postgres
+    networks:
+      - dss-network
+    volumes:
+      - ${POSTGRES_DATADIR:-./data-db-postgres}:/data/postgres
+    environment:
+      - http_proxy=${http_proxy}
+      - https_proxy=${https_proxy}
+      - no_proxy=${no_proxy}
+      - PGDATA=/data/postgres
+      - POSTGRES_DB=${POSTGRES_DB:-dss}
+      - POSTGRES_USER=${POSTGRES_USER:-dssuser}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-dsschangeme}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    restart: unless-stopped
