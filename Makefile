@@ -119,7 +119,7 @@ create-data-dir-db-mysql:
 clean-data-dir-db-mysql:
 	if [ -d "${MYSQL_DATADIR}" ] ; then sudo rm -rf ${MYSQL_DATADIR} ; fi
 up-db-%: | pre-up-db-%
-	docker-compose ${DC_DSS_RUN_CONF_DB} up  --no-build -d $*
+	docker-compose ${DC_DSS_RUN_CONF_DB} up --no-build -d $*
 stop-db-%:
 	docker-compose ${DC_DSS_RUN_CONF_DB} stop $*
 rm-db-%:

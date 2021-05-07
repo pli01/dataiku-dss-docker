@@ -21,13 +21,13 @@ DC_USE_TTY     := $(shell test -t 1 || echo "-T" )
 COMPOSE_PROJECT_NAME ?= latelier
 
 DC_DSS_DEFAULT_CONF ?= docker-compose.yml
+DC_DSS_CUSTOM_CONF ?= docker-compose-custom.yml
 
 DC_DSS_BUILD_CONF ?= -f docker-compose-build.yml
-# detect custom docker-compose file
-ifeq ("$(wildcard docker-compose-custom.yml)","")
 DC_DSS_RUN_CONF ?= -f ${DC_DSS_DEFAULT_CONF}
-else
-DC_DSS_RUN_CONF ?= -f ${DC_DSS_DEFAULT_CONF} -f docker-compose-custom.yml
+# detect custom docker-compose file
+ifneq ("$(wildcard ${DC_DSS_CUSTOM_CONF})","")
+DC_DSS_RUN_CONF += -f ${DC_DSS_CUSTOM_CONF}
 endif
 
 #
@@ -85,7 +85,6 @@ API_NODE               ?= localhost:${API_PORT}
 DKUMONITOR_DATADIR           ?= ./data-dkumonitor
 DKUMONITOR_PORT   ?= 27600
 DKUMONITOR_NODE               ?= localhost:${DKUMONITOR_PORT}
-
 #
 # mysql
 #
@@ -99,11 +98,12 @@ MYSQL_DATABASE ?= dss
 
 DC_DSS_DEFAULT_CONF_MYSQL ?= db/docker-compose-db-mysql.yml
 DC_DSS_CUSTOM_CONF_MYSQL ?= docker-compose-custom-db-mysql.yml
-DC_DSS_RUN_CONF_DB ?= -f ${DC_DSS_DEFAULT_CONF_MYSQL}
-# detect custom db docker-compose file
-ifeq ("$(wildcard ${DC_DSS_CUSTOM_CONF_MYSQL})","")
-DC_DSS_RUN_CONF ?= -f ${DC_DSS_DEFAULT_CONF_MYSQL}
-else
-DC_DSS_RUN_CONF ?= -f ${DC_DSS_DEFAULT_CONF_MYSQL} -f ${DC_DSS_CUSTOM_CONF_MYSQL}
-endif
 
+# detect custom db docker-compose file
+DC_DSS_RUN_CONF_DB ?= -f ${DC_DSS_DEFAULT_CONF_MYSQL}
+ifneq ("$(wildcard ${DC_DSS_CUSTOM_CONF_MYSQL})","")
+DC_DSS_RUN_CONF_DB += -f ${DC_DSS_CUSTOM_CONF_MYSQL}
+endif
+#
+#
+# postgresql
