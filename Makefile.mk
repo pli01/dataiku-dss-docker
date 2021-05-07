@@ -37,6 +37,7 @@ DSS_VERSION ?= 8.0.2
 DKUMONITOR_VERSION ?= 0.0.5
 VERTICA_VERSION ?= 10.1.1-0
 MYSQL_VERSION ?= 8.0.24
+POSTGRES_VERSION ?= 12.6
 
 #
 # NODETYPE=design automation api apideployer
@@ -100,10 +101,29 @@ DC_DSS_DEFAULT_CONF_MYSQL ?= db/docker-compose-db-mysql.yml
 DC_DSS_CUSTOM_CONF_MYSQL ?= docker-compose-custom-db-mysql.yml
 
 # detect custom db docker-compose file
-DC_DSS_RUN_CONF_DB ?= -f ${DC_DSS_DEFAULT_CONF_MYSQL}
+DC_DSS_RUN_CONF_DB_MYSQL ?= -f ${DC_DSS_DEFAULT_CONF_MYSQL}
 ifneq ("$(wildcard ${DC_DSS_CUSTOM_CONF_MYSQL})","")
-DC_DSS_RUN_CONF_DB += -f ${DC_DSS_CUSTOM_CONF_MYSQL}
+DC_DSS_RUN_CONF_DB_MYSQL += -f ${DC_DSS_CUSTOM_CONF_MYSQL}
 endif
 #
 #
 # postgresql
+#
+POSTGRES_DATADIR ?= ./data-db-postgres
+POSTGRES_PORT ?= 5432
+POSTGRES_NODE ?= localhost:${POSTGRES_PORT}
+POSTGRES_ROOT_PASSWORD ?= changeme
+POSTGRES_USER ?= dssuser
+POSTGRES_PASSWORD ?= dsschangeme
+POSTGRES_DATABASE ?= dss
+
+DC_DSS_DEFAULT_CONF_POSTGRES ?= db/docker-compose-db-postgres.yml
+DC_DSS_CUSTOM_CONF_POSTGRES ?= docker-compose-custom-db-postgres.yml
+
+# detect custom db docker-compose file
+DC_DSS_RUN_CONF_DB_POSTGRES ?= -f ${DC_DSS_DEFAULT_CONF_POSTGRES}
+ifneq ("$(wildcard ${DC_DSS_CUSTOM_CONF_POSTGRES})","")
+DC_DSS_RUN_CONF_DB_POSTGRES += -f ${DC_DSS_CUSTOM_CONF_POSTGRES}
+endif
+#
+

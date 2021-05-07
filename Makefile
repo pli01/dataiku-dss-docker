@@ -118,12 +118,27 @@ create-data-dir-db-mysql:
 	if [ ! -d "${MYSQL_DATADIR}" ] ; then mkdir -p ${MYSQL_DATADIR} ; chown ${ID_U}:${ID_G} ${MYSQL_DATADIR} ; fi
 clean-data-dir-db-mysql:
 	if [ -d "${MYSQL_DATADIR}" ] ; then sudo rm -rf ${MYSQL_DATADIR} ; fi
+#
+# manage db postgres
+#
+pre-up-db-postgres: create-data-dir-db-postgres
+	echo "# pre up postgres"
+create-data-dir-db-postgres:
+	if [ ! -d "${POSTGRES_DATADIR}" ] ; then mkdir -p ${POSTGRES_DATADIR} ; chown ${ID_U}:${ID_G} ${POSTGRES_DATADIR} ; fi
+clean-data-dir-db-postgres:
+	if [ -d "${POSTGRES_DATADIR}" ] ; then sudo rm -rf ${POSTGRES_DATADIR} ; fi
+#
+# manage db
+#
+# Tricks to uppper db type
+UC = $(shell echo '$1' | tr '[:lower:]' '[:upper:]')
+#
 up-db-%: | pre-up-db-%
-	docker-compose ${DC_DSS_RUN_CONF_DB} up --no-build -d $*
+	docker-compose ${DC_DSS_RUN_CONF_DB_$(call UC,$*)} up --no-build -d $*
 stop-db-%:
-	docker-compose ${DC_DSS_RUN_CONF_DB} stop $*
+	docker-compose ${DC_DSS_RUN_CONF_DB_$(call UC,$*)} stop $*
 rm-db-%:
-	docker-compose ${DC_DSS_RUN_CONF_DB} rm -s -f $*
+	docker-compose ${DC_DSS_RUN_CONF_DB_$(call UC,$*)} rm -s -f $*
 down-db-%: | stop-db-% rm-db-%
 	@echo "# down $*"
 restart-db-%: | down-db-% up-db-%
