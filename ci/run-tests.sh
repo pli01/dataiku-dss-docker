@@ -33,10 +33,10 @@ echo "# $(basename $0) started"
 echo "# prepare artifacts tests"
 cat <<EOF > artifacts
 COMPOSE_PROJECT_NAME=ci
-DESIGN_DATA_DIR=data-design
-AUTOMATION_DATA_DIR=data-automation
-APIDEPLOYER_DATA_DIR=data-apideployer
-API_DATA_DIR=data-api
+DESIGN_DATADIR=data-design
+AUTOMATION_DATADIR=data-automation
+APIDEPLOYER_DATADIR=data-apideployer
+API_DATADIR=data-api
 DKUMONITOR_DATADIR=data-dkumonitor
 EOF
 # ci config

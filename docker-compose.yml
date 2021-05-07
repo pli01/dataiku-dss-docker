@@ -20,7 +20,7 @@ services:
     networks:
       - dss-network
     volumes:
-      - ${DESIGN_DATA_DIR:-./data-design}:/home/dataiku/dss
+      - ${DESIGN_DATADIR:-./data-design}:/home/dataiku/dss
       # add custom license
       #- ./license.json:/home/dataiku/license.json
     environment:
@@ -38,7 +38,7 @@ services:
     networks:
       - dss-network
     volumes:
-      - ${AUTOMATION_DATA_DIR:-./data-automation}:/home/dataiku/dss
+      - ${AUTOMATION_DATADIR:-./data-automation}:/home/dataiku/dss
       # add custom license
       #- ./license.json:/home/dataiku/license.json
     environment:
@@ -56,7 +56,7 @@ services:
     networks:
       - dss-network
     volumes:
-      - ${APIDEPLOYER_DATA_DIR:-./data-apideployer}:/home/dataiku/dss
+      - ${APIDEPLOYER_DATADIR:-./data-apideployer}:/home/dataiku/dss
       # add custom license
       # - ./license.json:/home/dataiku/license.json
     environment:
@@ -74,7 +74,7 @@ services:
     networks:
       - dss-network
     volumes:
-      - ${API_DATA_DIR:-./data-api}:/home/dataiku/dss
+      - ${API_DATADIR:-./data-api}:/home/dataiku/dss
       # add custom license
       #- ./license.json:/home/dataiku/license.json
     environment:

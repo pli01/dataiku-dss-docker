@@ -9,7 +9,10 @@ ID_U = $(shell id -un)
 ID_G = $(shell id -gn)
 # enable trace in shell
 DEBUG ?= 
-
+#
+# Tricks to uppper case
+#
+UC = $(shell echo '$1' | tr '[:lower:]' '[:upper:]')
 #
 # docker-compose options
 #
@@ -48,7 +51,7 @@ DSS_INSTALLER_ARGS ?= # -P python3.6 -l /home/dataiku/license.json
 # design
 #
 DESIGN_NODETYPE           = design
-DESIGN_DATA_DIR           ?= ./data-design
+DESIGN_DATADIR           ?= ./data-design
 DESIGN_PORT               ?=10000
 DESIGN_INSTALL_SIZE       ?= ${INSTALL_SIZE}
 DESIGN_DSS_INSTALLER_ARGS ?= -t ${DESIGN_NODETYPE} ${DSS_INSTALLER_ARGS} -s ${DESIGN_INSTALL_SIZE}
@@ -57,7 +60,7 @@ DESIGN_NODE               ?= localhost:${DESIGN_PORT}
 # automation
 #
 AUTOMATION_NODETYPE           = automation
-AUTOMATION_DATA_DIR           ?= ./data-automation
+AUTOMATION_DATADIR           ?= ./data-automation
 AUTOMATION_PORT               ?= 10001
 AUTOMATION_INSTALL_SIZE       ?= ${INSTALL_SIZE}
 AUTOMATION_DSS_INSTALLER_ARGS ?= -t ${AUTOMATION_NODETYPE} ${DSS_INSTALLER_ARGS} -s ${AUTOMATION_INSTALL_SIZE}
@@ -66,7 +69,7 @@ AUTOMATION_NODE               ?= localhost:${AUTOMATION_PORT}
 # apideployer
 #
 APIDEPLOYER_NODETYPE           = apideployer
-APIDEPLOYER_DATA_DIR           ?= ./data-apideployer
+APIDEPLOYER_DATADIR           ?= ./data-apideployer
 APIDEPLOYER_PORT               ?= 10002
 APIDEPLOYER_INSTALL_SIZE       ?= ${INSTALL_SIZE}
 APIDEPLOYER_DSS_INSTALLER_ARGS ?= -t ${APIDEPLOYER_NODETYPE} ${DSS_INSTALLER_ARGS} -s ${APIDEPLOYER_INSTALL_SIZE}
@@ -75,7 +78,7 @@ APIDEPLOYER_NODE               ?= localhost:${APIDEPLOYER_PORT}
 # api
 #
 API_NODETYPE           = api
-API_DATA_DIR           ?= ./data-api
+API_DATADIR           ?= ./data-api
 API_PORT               ?=10003
 API_INSTALL_SIZE       ?= ${INSTALL_SIZE}
 API_DSS_INSTALLER_ARGS ?= -t ${API_NODETYPE} ${DSS_INSTALLER_ARGS} -s ${API_INSTALL_SIZE}

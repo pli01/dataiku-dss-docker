@@ -69,70 +69,27 @@ restart-%: down-% up-%
 #
 # create data dir if not exist/ clean data dir if exist
 #
+#
 pre-up: pre-up-design pre-up-automation pre-up-api pre-up-apideployer pre-up-dkumonitor
 
-pre-up-design: create-data-dir-design
-	echo "# pre up design"
-create-data-dir-design:
-	if [ ! -d "${DESIGN_DATA_DIR}" ] ; then mkdir -p ${DESIGN_DATA_DIR} ; chown ${ID_U}:${ID_G} ${DESIGN_DATA_DIR} ; fi
-clean-data-dir-design:
-	if [ -d "${DESIGN_DATA_DIR}" ] ; then rm -rf ${DESIGN_DATA_DIR} ; fi
-
-pre-up-automation: create-data-dir-automation
-	echo "# pre up automation"
-create-data-dir-automation:
-	if [ ! -d "${AUTOMATION_DATA_DIR}" ] ; then mkdir -p ${AUTOMATION_DATA_DIR} ; chown ${ID_U}:${ID_G} ${AUTOMATION_DATA_DIR} ; fi
-clean-data-dir-automation:
-	if [ -d "${AUTOMATION_DATA_DIR}" ] ; then rm -rf ${AUTOMATION_DATA_DIR} ; fi
-
-pre-up-api: create-data-dir-api
-	echo "# pre up api"
-create-data-dir-api:
-	if [ ! -d "${API_DATA_DIR}" ] ; then mkdir -p ${API_DATA_DIR} ; chown ${ID_U}:${ID_G} ${API_DATA_DIR} ; fi
-clean-data-dir-api:
-	if [ -d "${API_DATA_DIR}" ] ; then rm -rf ${API_DATA_DIR} ; fi
-
-pre-up-apideployer: create-data-dir-apideployer
-	echo "# pre up apideployer"
-create-data-dir-apideployer:
-	if [ ! -d "${APIDEPLOYER_DATA_DIR}" ] ; then mkdir -p ${APIDEPLOYER_DATA_DIR} ; chown ${ID_U}:${ID_G} ${APIDEPLOYER_DATA_DIR} ; fi
-clean-data-dir-apideployer:
-	if [ -d "${APIDEPLOYER_DATA_DIR}" ] ; then rm -rf ${APIDEPLOYER_DATA_DIR} ; fi
-
-pre-up-dkumonitor: create-data-dir-dkumonitor
-	echo "# pre up dkumonitor"
-create-data-dir-dkumonitor:
-	if [ ! -d "${DKUMONITOR_DATADIR}" ] ; then mkdir -p ${DKUMONITOR_DATADIR} ; chown ${ID_U}:${ID_G} ${DKUMONITOR_DATADIR} ; fi
-clean-data-dir-dkumonitor:
-	if [ -d "${DKUMONITOR_DATADIR}" ] ; then rm -rf ${DKUMONITOR_DATADIR} ; fi
-
-# clean data dir if exist
 clean-data-dir: clean-data-dir-design clean-data-dir-automation clean-data-dir-api clean-data-dir-apideployer clean-data-dir-dkumonitor
 
-#
-# manage db mysql
-#
-pre-up-db-mysql: create-data-dir-db-mysql
-	echo "# pre up mysql"
-create-data-dir-db-mysql:
-	if [ ! -d "${MYSQL_DATADIR}" ] ; then mkdir -p ${MYSQL_DATADIR} ; chown ${ID_U}:${ID_G} ${MYSQL_DATADIR} ; fi
-clean-data-dir-db-mysql:
-	if [ -d "${MYSQL_DATADIR}" ] ; then sudo rm -rf ${MYSQL_DATADIR} ; fi
-#
-# manage db postgres
-#
-pre-up-db-postgres: create-data-dir-db-postgres
-	echo "# pre up postgres"
-create-data-dir-db-postgres:
-	if [ ! -d "${POSTGRES_DATADIR}" ] ; then mkdir -p ${POSTGRES_DATADIR} ; chown ${ID_U}:${ID_G} ${POSTGRES_DATADIR} ; fi
-clean-data-dir-db-postgres:
-	if [ -d "${POSTGRES_DATADIR}" ] ; then sudo rm -rf ${POSTGRES_DATADIR} ; fi
+pre-up-%: create-data-dir-%
+	echo "# pre up $*"
+create-data-dir-%:
+	if [ ! -d "${$(call UC,$*)_DATADIR}" ] ; then mkdir -p ${$(call UC,$*)_DATADIR} ; chown ${ID_U}:${ID_G} ${$(call UC,$*)_DATADIR} ; fi
+clean-data-dir-%:
+	if [ -d "${$(call UC,$*)_DATADIR}" ] ; then rm -rf ${$(call UC,$*)_DATADIR} ; fi
 #
 # manage db
 #
-# Tricks to uppper db type
-UC = $(shell echo '$1' | tr '[:lower:]' '[:upper:]')
 #
+pre-up-db-%: create-data-dir-db-%
+	echo "# pre up $*"
+create-data-dir-db-%:
+	if [ ! -d "${$(call UC,$*)_DATADIR}" ] ; then mkdir -p ${$(call UC,$*)_DATADIR} ; chown ${ID_U}:${ID_G} ${$(call UC,$*)_DATADIR} ; fi
+clean-data-dir-db-%:
+	if [ -d "${$(call UC,$*)_DATADIR}" ] ; then sudo rm -rf ${$(call UC,$*)_DATADIR} ; fi
 up-db-%: | pre-up-db-%
 	docker-compose ${DC_DSS_RUN_CONF_DB_$(call UC,$*)} up --no-build -d $*
 stop-db-%:
@@ -149,10 +106,8 @@ restart-db-%: | down-db-% up-db-%
 #
 config:
 	docker-compose ${DC_DSS_RUN_CONF} config
-
 up-%: | pre-up-%
 	docker-compose ${DC_DSS_RUN_CONF} up  --no-build -d $*
-
 stop-%:
 	docker-compose ${DC_DSS_RUN_CONF} stop $*
 rm-%:
