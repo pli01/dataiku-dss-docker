@@ -115,10 +115,10 @@ endif
 POSTGRES_DATADIR ?= ./data-db-postgres
 POSTGRES_PORT ?= 5432
 POSTGRES_NODE ?= localhost:${POSTGRES_PORT}
-POSTGRES_ROOT_PASSWORD ?= changeme
-POSTGRES_USER ?= dssuser
-POSTGRES_PASSWORD ?= dsschangeme
-POSTGRES_DATABASE ?= dss
+POSTGRES_PASSWORD ?= changeme
+POSTGRES_USER_DSS ?= dssuser
+POSTGRES_PASSWORD_DSS ?= dsschangeme
+POSTGRES_DATABASE_DSS ?= dss
 
 DC_DSS_DEFAULT_CONF_POSTGRES ?= db/docker-compose-db-postgres.yml
 DC_DSS_CUSTOM_CONF_POSTGRES ?= docker-compose-custom-db-postgres.yml
