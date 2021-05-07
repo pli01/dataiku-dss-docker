@@ -97,7 +97,7 @@ MYSQL_USER ?= dssuser
 MYSQL_PASSWORD ?= dsschangeme
 MYSQL_DATABASE ?= dss
 
-DC_DSS_DEFAULT_CONF_MYSQL ?= docker-compose-db-mysql.yml
+DC_DSS_DEFAULT_CONF_MYSQL ?= db/docker-compose-db-mysql.yml
 DC_DSS_CUSTOM_CONF_MYSQL ?= docker-compose-custom-db-mysql.yml
 DC_DSS_RUN_CONF_DB ?= -f ${DC_DSS_DEFAULT_CONF_MYSQL}
 # detect custom db docker-compose file
