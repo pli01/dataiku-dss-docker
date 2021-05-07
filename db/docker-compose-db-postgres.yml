@@ -14,14 +14,16 @@ services:
       - dss-network
     volumes:
       - ${POSTGRES_DATADIR:-./data-db-postgres}:/data/postgres
+      - ./postgres-init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
     environment:
       - http_proxy=${http_proxy}
       - https_proxy=${https_proxy}
       - no_proxy=${no_proxy}
       - PGDATA=/data/postgres
-      - POSTGRES_DB=${POSTGRES_DB:-dss}
-      - POSTGRES_USER=${POSTGRES_USER:-dssuser}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-dsschangeme}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeme}
+      - POSTGRES_DATABASE_DSS=${POSTGRES_DATABASE_DSS:-dss}
+      - POSTGRES_USER_DSS=${POSTGRES_USER_DSS:-dssuser}
+      - POSTGRES_PASSWORD_DSS=${POSTGRES_PASSWORD_DSS:-dsschangeme}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     restart: unless-stopped

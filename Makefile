@@ -65,7 +65,6 @@ restart: down up
 
 restart-%: down-% up-%
 	echo "# $* restarted"
-
 #
 # create data dir if not exist/ clean data dir if exist
 #
@@ -73,25 +72,17 @@ restart-%: down-% up-%
 pre-up: pre-up-design pre-up-automation pre-up-api pre-up-apideployer pre-up-dkumonitor
 
 clean-data-dir: clean-data-dir-design clean-data-dir-automation clean-data-dir-api clean-data-dir-apideployer clean-data-dir-dkumonitor
-
-pre-up-%: create-data-dir-%
-	echo "# pre up $*"
-create-data-dir-%:
-	if [ ! -d "${$(call UC,$*)_DATADIR}" ] ; then mkdir -p ${$(call UC,$*)_DATADIR} ; chown ${ID_U}:${ID_G} ${$(call UC,$*)_DATADIR} ; fi
-clean-data-dir-%:
-	if [ -d "${$(call UC,$*)_DATADIR}" ] ; then rm -rf ${$(call UC,$*)_DATADIR} ; fi
 #
 # manage db
 #
-#
 pre-up-db-%: create-data-dir-db-%
-	echo "# pre up $*"
+	echo "# pre up db $*"
 create-data-dir-db-%:
-	if [ ! -d "${$(call UC,$*)_DATADIR}" ] ; then mkdir -p ${$(call UC,$*)_DATADIR} ; chown ${ID_U}:${ID_G} ${$(call UC,$*)_DATADIR} ; fi
+	@if [ ! -d "${$(call UC,$*)_DATADIR}" ] ; then mkdir -p ${$(call UC,$*)_DATADIR} ; chown ${ID_U}:${ID_G} ${$(call UC,$*)_DATADIR} ; fi
 clean-data-dir-db-%:
 	if [ -d "${$(call UC,$*)_DATADIR}" ] ; then sudo rm -rf ${$(call UC,$*)_DATADIR} ; fi
 up-db-%: | pre-up-db-%
-	docker-compose ${DC_DSS_RUN_CONF_DB_$(call UC,$*)} up --no-build -d $*
+	@docker-compose ${DC_DSS_RUN_CONF_DB_$(call UC,$*)} up --no-build -d $*
 stop-db-%:
 	docker-compose ${DC_DSS_RUN_CONF_DB_$(call UC,$*)} stop $*
 rm-db-%:
@@ -100,12 +91,17 @@ down-db-%: | stop-db-% rm-db-%
 	@echo "# down $*"
 restart-db-%: | down-db-% up-db-%
 	@echo "# restart db $*"
-
 #
 # manage only one service (design,automation,api,apideployer)
 #
 config:
 	docker-compose ${DC_DSS_RUN_CONF} config
+pre-up-%: create-data-dir-%
+	echo "# pre up $*"
+create-data-dir-%:
+	if [ ! -d "${$(call UC,$*)_DATADIR}" ] ; then mkdir -p ${$(call UC,$*)_DATADIR} ; chown ${ID_U}:${ID_G} ${$(call UC,$*)_DATADIR} ; fi
+clean-data-dir-%:
+	if [ -d "${$(call UC,$*)_DATADIR}" ] ; then rm -rf ${$(call UC,$*)_DATADIR} ; fi
 up-%: | pre-up-%
 	docker-compose ${DC_DSS_RUN_CONF} up  --no-build -d $*
 stop-%:
