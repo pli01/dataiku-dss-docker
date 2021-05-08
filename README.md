@@ -1,15 +1,15 @@
-# Dataiku dss multi node docker-compose
+# Dataiku Data Science Studio multi node docker-compose
 
 [![CI](https://github.com/pli01/dataiku-dss-docker/actions/workflows/main.yml/badge.svg)](https://github.com/pli01/dataiku-dss-docker/actions/workflows/main.yml)
 
 ## Description
-This docker-compose stack includes the following dataiku services
-* design node (default)
-* automation node
-* apideployer node
-* api node
-* dkumonitor: Graphite/Grafana stack (optional)
-* sample db
+This docker-compose stack includes the following Dataiku Data Science Studio (DSS) service
+* `design` node (default)
+* `automation` node
+* `apideployer` node
+* `api` node
+* `dkumonitor` node: Graphite/Grafana stack (optional)
+* database examples: mysql, postgresql, vertica, mongodb
 
 Added Features:
 * Add extended centos based official docker dataiku/dss
@@ -24,7 +24,8 @@ Added Features:
 * provide sample db (vertica,mysql) to test connections
 
 Sources:
-* [official docker image dataiku/dss](https://github.com/dataiku/dataiku-tools/tree/master/dss-docker)
+* [official docker hub image dataiku/dss](https://hub.docker.com/r/dataiku/dss/)
+* [official github dataiku/dss](https://github.com/dataiku/dataiku-tools/tree/master/dss-docker)
 * [requirements for debian](https://doc.dataiku.com/dss/latest/installation/custom/initial-install.html#debian-ubuntu-linux-distributions)
 * [dkumonitor](https://github.com/dataiku/dkumonitor)
 
