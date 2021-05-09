@@ -109,7 +109,6 @@ ifneq ("$(wildcard ${DC_DSS_CUSTOM_CONF_MYSQL})","")
 DC_DSS_RUN_CONF_DB_MYSQL += -f ${DC_DSS_CUSTOM_CONF_MYSQL}
 endif
 #
-#
 # postgresql
 #
 POSTGRES_DATADIR ?= ./data-db-postgres
@@ -129,4 +128,21 @@ ifneq ("$(wildcard ${DC_DSS_CUSTOM_CONF_POSTGRES})","")
 DC_DSS_RUN_CONF_DB_POSTGRES += -f ${DC_DSS_CUSTOM_CONF_POSTGRES}
 endif
 #
+# vertica
+#
+VERTICA_DATADIR ?= ./data-db-vertica
+VERTICA_PORT ?= 5433
+VERTICA_NODE ?= localhost:${VERTICA_PORT}
+VERTICA_PASSWORD ?= changeme
+VERTICA_USER_DSS ?= dssuser
+VERTICA_PASSWORD_DSS ?= dsschangeme
+VERTICA_DATABASE_DSS ?= dss
 
+DC_DSS_DEFAULT_CONF_VERTICA ?= db/docker-compose-db-vertica.yml
+DC_DSS_CUSTOM_CONF_VERTICA ?= docker-compose-custom-db-vertica.yml
+
+# detect custom db docker-compose file
+DC_DSS_RUN_CONF_DB_VERTICA ?= -f ${DC_DSS_DEFAULT_CONF_VERTICA}
+ifneq ("$(wildcard ${DC_DSS_CUSTOM_CONF_VERTICA})","")
+DC_DSS_RUN_CONF_DB_VERTICA += -f ${DC_DSS_CUSTOM_CONF_VERTICA}
+endif

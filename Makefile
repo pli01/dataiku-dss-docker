@@ -75,6 +75,24 @@ clean-data-dir: clean-data-dir-design clean-data-dir-automation clean-data-dir-a
 #
 # manage db
 #
+vertica: init-up-db-vertica up-db-vertica  install-vertica
+#vertica: init-up-db-vertica up-db-vertica  install-vertica create-db-vertica
+#vertica: init-up-db-vertica install-vertica up-db-vertica create-db-vertica
+	@echo $@
+init-up-db-vertica:
+	@echo $@
+	@docker-compose ${DC_DSS_RUN_CONF_DB_VERTICA} run --entrypoint "bash -x /opt/vertica/bin/docker-entrypoint.sh re-ip-vertica-node" --rm  -T vertica
+restart-vertica-node:
+	@echo $@
+#	@docker-compose ${DC_DSS_RUN_CONF_DB_VERTICA} exec -T vertica bash -c "/opt/vertica/bin/docker-entrypoint.sh restart-vertica-node"
+	@docker-compose ${DC_DSS_RUN_CONF_DB_VERTICA} run --entrypoint  "bash -c /opt/vertica/bin/docker-entrypoint.sh restart-vertica-node" --rm -T vertica
+install-vertica:
+	@echo $@
+	@docker-compose ${DC_DSS_RUN_CONF_DB_VERTICA} exec -T vertica bash -c "/home/dbadmin/local-data/create-db-vertica.sh"
+start-db-vertica:
+	@echo $@
+	@docker-compose ${DC_DSS_RUN_CONF_DB_VERTICA} exec -T vertica  bash -c "/opt/vertica/bin/admintools -t start_db --database dss"
+
 pre-up-db-%: create-data-dir-db-%
 	echo "# pre up db $*"
 create-data-dir-db-%:

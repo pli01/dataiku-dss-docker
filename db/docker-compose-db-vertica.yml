@@ -1,0 +1,39 @@
+version: '3.5'
+
+networks:
+  dss-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+
+services:
+  vertica:
+    image: verticadocker/vertica-k8s:${VERTICA_VERSION:-10.1.1-0}
+    container_name: ${COMPOSE_PROJECT_NAME}_db_vertica
+    networks:
+      - dss-network
+    volumes:
+      #- ${VERTICA_DATADIR:-./data-db-vertica}:/var/lib/vertica
+      - ./create-db-vertica.sh:/home/dbadmin/create-db-vertica.sh
+      - ./data-db-vertica/config:/opt/vertica/config
+      - ./data-db-vertica/log:/opt/vertica/log
+      - ./data-db-vertica/podinfo:/etc/podinfo
+      - ./data-db-vertica/local-data:/home/dbadmin/local-data
+    environment:
+      - http_proxy=${http_proxy}
+      - https_proxy=${https_proxy}
+      - no_proxy=${no_proxy}
+      - POD_IP=127.0.0.1
+    #entrypoint: ["sh", "-c", "sleep 2073600"]
+    #entrypoint: ["bash", "-x", "/opt/vertica/bin/docker-entrypoint.sh", "re-ip-vertica-node"]
+    entrypoint: ["bash", "-x", "/opt/vertica/bin/docker-entrypoint.sh"]
+    #entrypoint: ["bash", "-x", "/opt/vertica/bin/docker-entrypoint.sh", "restart-vertica-node"]
+    ports:
+      - "5433:5433"
+#      - "5434:5434"
+      - "5444:5444"
+#      - "5450:5450"
+#      - "4803:4803"
+#      - "4804:4804"
+#      - "6543:6543"
+#      - "2222:22"
