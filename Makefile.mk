@@ -134,9 +134,7 @@ VERTICA_DATADIR ?= ./data-db-vertica
 VERTICA_PORT ?= 5433
 VERTICA_NODE ?= localhost:${VERTICA_PORT}
 VERTICA_PASSWORD ?= changeme
-VERTICA_USER_DSS ?= dssuser
-VERTICA_PASSWORD_DSS ?= dsschangeme
-VERTICA_DATABASE_DSS ?= dss
+VERTICA_DATABASE ?= dss
 
 DC_DSS_DEFAULT_CONF_VERTICA ?= db/docker-compose-db-vertica.yml
 DC_DSS_CUSTOM_CONF_VERTICA ?= docker-compose-custom-db-vertica.yml
