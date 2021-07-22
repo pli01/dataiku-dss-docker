@@ -51,7 +51,8 @@ echo "# clean env"
 make down clean-data-dir
 
 echo "# build image"
-make build-all
+# make build-all
+make build-debian build-dkumonitor
 
 echo "# up all dss services"
 make up-all

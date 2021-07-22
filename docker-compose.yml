@@ -8,7 +8,7 @@ networks:
 
 services:
 # To build custom dataiku_dss image, see docker-compose-build.yml file
-#  build_dss:
+#  dss:
 #    build:
 #      context: dss
 #    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
