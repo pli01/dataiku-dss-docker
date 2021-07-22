@@ -34,7 +34,7 @@ Sources:
 | Package | Version | Comment | 
 | --- | --- | --- |
 | dataiku/dss | 8.0.2 | official docker dss is 8.0.2 |
-| debian dataiku/dss | >= 8.0.2 | debian docker dataiku/dss support 8.0.2, and last version is 8.0.7 or 9.0.2 |
+| debian dataiku/dss | >= 8.0.2 | debian docker dataiku/dss support 8.0.2, and last version is 9.0.4 |
 | dkumonitor| 0.0.5  | |
 | jdbc vertica | 10.1.1-0 | |
 | jdbc mysql | 8.0.24 | |
@@ -62,7 +62,7 @@ Notes:
    - 27609 (carbon_tags_port)
  * docker version:
    - dataiku/dss:8.0.2
-   - official dataiku archive is 8.0.7 and 9.0.2
+   - official dataiku archive is 8.0.7 and 9.0.4
 
 ## Usage
 
