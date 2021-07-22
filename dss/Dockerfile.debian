@@ -48,7 +48,7 @@ RUN echo "$http_proxy $no_proxy" && set -x && [ -z "$MIRROR_DEBIAN" ] || \
 RUN DSSKIT="dataiku-dss-$DSS_VERSION" \
     && cd /home/dataiku \
     && echo "+ Downloading kit $DSSKIT" \
-    && curl -OsS "https://cdn.downloads.dataiku.com/public/studio/$DSS_VERSION/$DSSKIT.tar.gz" \
+    && curl -OsS "https://cdn.downloads.dataiku.com/public/dss/$DSS_VERSION/$DSSKIT.tar.gz" \
     && echo "+ Extracting kit $DSSKIT" \
     && tar xf "$DSSKIT.tar.gz" \
     && rm "$DSSKIT.tar.gz" \
