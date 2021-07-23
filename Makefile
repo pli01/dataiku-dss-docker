@@ -59,6 +59,12 @@ push-image-%:
 	image_name=$$(docker-compose $(DC_DSS_BUILD_CONF) config | python -c 'import sys, yaml, json; cfg = json.loads(json.dumps(yaml.load(sys.stdin, Loader=yaml.SafeLoader), sys.stdout, indent=4)); print cfg["services"]["$*"]["image"]') ; \
          docker tag $$image_name ${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/$$image_name ; \
          docker push ${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/$$image_name
+pull-image: registry-login pull-image-dss pull-image-dkumonitor
+pull-image-%:
+	image_name=$$(docker-compose $(DC_DSS_BUILD_CONF) config | python -c 'import sys, yaml, json; cfg = json.loads(json.dumps(yaml.load(sys.stdin, Loader=yaml.SafeLoader), sys.stdout, indent=4)); print cfg["services"]["$*"]["image"]') ; \
+         docker pull ${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/$$image_name ; \
+         docker tag ${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/$$image_name $$image_name
+
 # up/down
 network:
 	@docker network create ${COMPOSE_PROJECT_NAME} 2> /dev/null; true
