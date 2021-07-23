@@ -1,6 +1,6 @@
 version: '3.5'
 services:
-  build_dss:
+  dss:
     build:
       context: dss
       dockerfile: Dockerfile
@@ -12,7 +12,7 @@ services:
         - VERTICA_VERSION
         - MYSQL_VERSION
     image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
-  build_dss_debian:
+  dss_debian:
     build:
       context: dss
       dockerfile: Dockerfile.debian
@@ -25,7 +25,7 @@ services:
         - VERTICA_VERSION
         - MYSQL_VERSION
     image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
-  build_dkumonitor:
+  dkumonitor:
     build:
       context: dkumonitor
       args:

@@ -1,5 +1,5 @@
 ARG DSS_VERSION
-FROM dataiku/dss:${DSS_VERSION:-latest}
+FROM dataiku/dss:${DSS_VERSION:-8.0.2}
 # add DSS_INSTALLER_ARGS dss entrypoint run.sh
 ENV DSS_INSTALLER_ARGS $DSS_INSTALLER_ARGS
 # Add dkumonitor

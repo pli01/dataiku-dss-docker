@@ -33,10 +33,15 @@ ifneq ("$(wildcard ${DC_DSS_CUSTOM_CONF})","")
 DC_DSS_RUN_CONF += -f ${DC_DSS_CUSTOM_CONF}
 endif
 
+# Default registry
+DOCKER_REGISTRY   := ghcr.io
+DOCKER_REPOSITORY := pli01/dataiku-dss-docker
+
 #
 # dss
 #
-DSS_VERSION ?= 8.0.2
+DSS_VERSION ?= 9.0.4
+#8.0.2
 DKUMONITOR_VERSION ?= 0.0.5
 VERTICA_VERSION ?= 10.1.1-0
 MYSQL_VERSION ?= 8.0.24
