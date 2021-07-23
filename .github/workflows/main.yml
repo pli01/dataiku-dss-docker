@@ -32,7 +32,7 @@ jobs:
         run: |
           ci/run-tests.sh
       - name: Docker push version
-        if: ( success() && startsWith(github.ref,'refs/heads/main') )
+        if: ( success() && startsWith(github.ref,'refs/heads/master') )
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
