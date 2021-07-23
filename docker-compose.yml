@@ -20,6 +20,7 @@ services:
     networks:
       - dss-network
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ${DESIGN_DATADIR:-./data-design}:/home/dataiku/dss
       # add custom license
       #- ./license.json:/home/dataiku/license.json

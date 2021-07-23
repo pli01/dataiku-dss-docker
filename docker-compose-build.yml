@@ -21,6 +21,8 @@ services:
         - https_proxy=$https_proxy
         - no_proxy=$no_proxy
         - MIRROR_DEBIAN
+        - MIRROR_DOCKER
+        - MIRROR_DOCKER_KEY
         - DSS_VERSION
         - VERTICA_VERSION
         - MYSQL_VERSION
