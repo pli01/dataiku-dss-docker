@@ -29,6 +29,9 @@ function test_app {
 }
 
 echo "# $(basename $0) started"
+if [ -n "$DOCKERHUB_LOGIN" -a -n "$DOCKERHUB_TOKEN" ] ; then
+  echo "$DOCKERHUB_LOGIN" | docker login --username $DOCKERHUB_TOKEN --password-stdin
+fi
 
 echo "# prepare artifacts tests"
 cat <<EOF > artifacts
@@ -77,3 +80,6 @@ make down-db-postgres clean-data-dir-db-postgres
 
 echo "# clean env"
 make down clean-data-dir
+if [ -n "$DOCKERHUB_LOGIN" -a -n "$DOCKERHUB_TOKEN" ] ; then
+  docker logout
+fi
