@@ -11,11 +11,11 @@ services:
 #  dss:
 #    build:
 #      context: dss
-#    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
+#    image: dataiku_dss:${DSS_VERSION:-latest}
 #
 
   design:
-    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
+    image: dataiku_dss:${DSS_VERSION:-latest}
     container_name: ${COMPOSE_PROJECT_NAME}_dss_design
     networks:
       - dss-network
@@ -33,7 +33,7 @@ services:
       - ${DESIGN_PORT:-10000}:10000
 
   automation:
-    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
+    image: dataiku_dss:${DSS_VERSION:-latest}
     container_name: ${COMPOSE_PROJECT_NAME}_dss_automation
     networks:
       - dss-network
@@ -51,7 +51,7 @@ services:
       - ${AUTOMATION_PORT:-10001}:10000
 
   apideployer:
-    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
+    image: dataiku_dss:${DSS_VERSION:-latest}
     container_name: ${COMPOSE_PROJECT_NAME}_dss_apideployer
     networks:
       - dss-network
@@ -69,7 +69,7 @@ services:
       - ${APIDEPLOYER_PORT:-10002}:10000
 
   api:
-    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
+    image: dataiku_dss:${DSS_VERSION:-latest}
     container_name: ${COMPOSE_PROJECT_NAME}_dss_api
     networks:
       - dss-network
@@ -87,7 +87,7 @@ services:
       - ${API_PORT:-10003}:10000
 
   dkumonitor:
-    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dkumonitor:${DKUMONITOR_VERSION:-latest}
+    image: dataiku_dkumonitor:${DKUMONITOR_VERSION:-latest}
     container_name: ${COMPOSE_PROJECT_NAME}_dkumonitor
     networks:
       - dss-network

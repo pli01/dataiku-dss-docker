@@ -11,7 +11,7 @@ services:
         - DSS_VERSION
         - VERTICA_VERSION
         - MYSQL_VERSION
-    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
+    image: dataiku_dss:${DSS_VERSION:-latest}
   dss_debian:
     build:
       context: dss
@@ -24,7 +24,7 @@ services:
         - DSS_VERSION
         - VERTICA_VERSION
         - MYSQL_VERSION
-    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dss:${DSS_VERSION:-latest}
+    image: dataiku_dss:${DSS_VERSION:-latest}
   dkumonitor:
     build:
       context: dkumonitor
@@ -34,4 +34,4 @@ services:
         - no_proxy=$no_proxy
         - MIRROR_DEBIAN
         - DKUMONITOR_VERSION
-    image: ${COMPOSE_PROJECT_NAME:-latelier}_dataiku_dkumonitor:${DKUMONITOR_VERSION:-latest}
+    image: dataiku_dkumonitor:${DKUMONITOR_VERSION:-latest}
