@@ -24,6 +24,7 @@ Added Features:
 * auto register dss nodes in dkumonitor
 * install python pip requirements for offline install at runtime (default: python2.7)
 * install jdbc driver (vertica,mysql)
+* add docker container engine support
 * provide sample db (vertica,mysql) to test connections
 
 Sources:
@@ -108,8 +109,11 @@ Images are named `dataiku_dss` and `dataiku_dkumonitor`
 | start dkumonitor node | `make up-dkumonitor` |
 | stop dkumonitor node | `make down-dkumonitor` |
 | --- | --- |
-| start mysql node | `make start-db-mysql` |
+| start mysql node | `make up-db-mysql` |
 | stop mysql node | `make down-db-mysql` |
+| start postgres node | `make up-db-postgres` |
+| stop postgres node | `make down-db-postgres` |
+
 
 ### test service is running
 | Description |  command |
