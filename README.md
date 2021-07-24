@@ -3,7 +3,7 @@
 [![CI](https://github.com/pli01/dataiku-dss-docker/actions/workflows/main.yml/badge.svg)](https://github.com/pli01/dataiku-dss-docker/actions/workflows/main.yml)
 
 ## Description
-This docker-compose stack includes the following Dataiku Data Science Studio (DSS) service
+This docker-compose stack includes the following Dataiku Data Science Studio (DSS) services
 * `design` node (default)
 * `automation` node
 * `apideployer` node
@@ -13,7 +13,7 @@ This docker-compose stack includes the following Dataiku Data Science Studio (DS
 
 Added Features:
 * Add extended centos based official docker dataiku/dss
-* Add custom debian docker image based on official dataiku requirements
+* Add custom debian docker image based on official dataiku requirements and usefull addons
 * Add DSS_INSTALL_ARGS variables in docker entrypoint (run.sh) to configure:
   + install node type (-t option for installer.sh)
   + INSTALL_SIZE per services (big, medium, small)
@@ -34,7 +34,7 @@ Sources:
 | Package | Version | Comment | 
 | --- | --- | --- |
 | dataiku/dss | 8.0.2 | official docker dss is 8.0.2 |
-| debian dataiku/dss | >= 8.0.2 | debian docker dataiku/dss support 8.0.2, and last version is 9.0.4 |
+| debian dataiku/dss | 9.0.4 | debian docker dataiku/dss support from 8.0.2 and last version 9.0.4 |
 | dkumonitor| 0.0.5  | |
 | jdbc vertica | 10.1.1-0 | |
 | jdbc mysql | 8.0.24 | |
@@ -73,14 +73,15 @@ Notes:
 * (opt) create `docker-compose-custom-db-XXX.yml` to override default value of `docker-compose-db-XXX.yml`
 
 ### Prereq: Build custom dss image
-Image are  prefixed with `COMPOSE_PROJECT_NAME`_dataiku_dss
+Images are named `dataiku_dss` and `dataiku_dkumonitor`
+
 2 options:
 * step build a custom docker image based on official dataiku/dss image.
 * step build a custom docker image based debian and official dataiku requirements
 
 | Description |  command |
 | --- | --- |
-| build the extended centos based official docker dataiku/dss | `make build` |
+| build the extended centos based official docker dataiku/dss (8.0.2) | `make build` |
 | build a debian customized dataiku/dss | `make build-debian` |
 | build dkumonitor | `make build-dkumonitor` |
 
