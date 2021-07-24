@@ -11,6 +11,9 @@ This docker-compose stack includes the following Dataiku Data Science Studio (DS
 * `dkumonitor` node: Graphite/Grafana stack (optional)
 * database examples: mysql, postgresql, vertica, mongodb
 
+
+![Architecture](./docs/dataiku-dss-docker-stack.png)
+
 Added Features:
 * Add extended centos based official docker dataiku/dss
 * Add custom debian docker image based on official dataiku requirements and usefull addons
