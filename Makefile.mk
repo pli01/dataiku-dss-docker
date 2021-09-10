@@ -38,7 +38,7 @@ endif
 #
 DSS_VERSION ?= 8.0.2
 DKUMONITOR_VERSION ?= 0.0.5
-VERTICA_VERSION ?= 10.1.1-0
+VERTICA_VERSION ?= 11.0.0-0
 MYSQL_VERSION ?= 8.0.24
 POSTGRES_VERSION ?= 12.6
 
@@ -130,11 +130,11 @@ endif
 #
 # vertica
 #
-VERTICA_DATADIR ?= ./data-db-vertica
+VERTICA_DATADIR ?= $(shell pwd)/data-db-vertica
 VERTICA_PORT ?= 5433
 VERTICA_NODE ?= localhost:${VERTICA_PORT}
-VERTICA_PASSWORD ?= changeme
-VERTICA_DATABASE ?= dss
+VERTICA_PASSWORD ?= vertica
+VERTICA_USER ?= newdbadmin
 
 DC_DSS_DEFAULT_CONF_VERTICA ?= db/docker-compose-db-vertica.yml
 DC_DSS_CUSTOM_CONF_VERTICA ?= docker-compose-custom-db-vertica.yml

@@ -8,27 +8,20 @@ networks:
 
 services:
   vertica:
-    image: verticadocker/vertica-k8s:${VERTICA_VERSION:-10.1.1-0}
+    image: vertica/vertica-ce:${VERTICA_VERSION:-11.0.0-0}
     container_name: ${COMPOSE_PROJECT_NAME}_db_vertica
     networks:
       - dss-network
     volumes:
-      - ./create-db-vertica.sh:/home/dbadmin/create-db-vertica.sh
-      - ${VERTICA_DATADIR:-./data-db-vertica}/config:/opt/vertica/config
-      - ${VERTICA_DATADIR:-./data-db-vertica}/log:/opt/vertica/log
-      - ${VERTICA_DATADIR:-./data-db-vertica}/podinfo:/etc/podinfo
-      - ${VERTICA_DATADIR:-./data-db-vertica}/local-data:/home/dbadmin/local-data
+      - ${VERTICA_DATADIR:-./data-db-vertica}:/data/
+      - ./vertica/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
     environment:
       - http_proxy=${http_proxy}
       - https_proxy=${https_proxy}
       - no_proxy=${no_proxy}
-      - POD_IP=127.0.0.1
-      - VERTICA_DATABASE=${VERTICA_DATABASE:-dss}
-      - VERTICA_PASSWORD=${VERTICA_PASSWORD:-changeme}
-      - VERTICA_DATA=${VERTICA_DATA:-/home/dbadmin/local-data}
-    entrypoint: ["bash", "-x", "/home/dbadmin/create-db-vertica.sh"]
-    #entrypoint: ["bash", "-x", "/opt/vertica/bin/docker-entrypoint.sh", "re-ip-vertica-node"]
-    #entrypoint: ["bash", "-x", "/opt/vertica/bin/docker-entrypoint.sh", "restart-vertica-node"]
+      - APP_DB_USER=${VERTICA_USER:-newdbadmin}
+      - APP_DB_PASSWORD=${VERTICA_PASSWORD:-vertica}
+      - TZ=Europe/Paris
     ports:
       - "5433:5433"
 #      - "5434:5434"
