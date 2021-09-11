@@ -6,8 +6,8 @@ mkdir -p drivers/jdbc
 # add vertica driver
 if [ -n "$VERTICA_VERSION" ]; then
  ( cd drivers/jdbc
- curl -sLO https://www.vertica.com/client_drivers/10.1.x/${VERTICA_VERSION}/vertica-jdbc-${VERTICA_VERSION}.jar
- curl -sLO https://www.vertica.com/docs/Checksums/10.1.1/${VERTICA_VERSION}_sha1sum.txt
+ curl -sLO https://www.vertica.com/client_drivers/11.0.x/${VERTICA_VERSION}/vertica-jdbc-${VERTICA_VERSION}.jar
+ curl -sLO https://www.vertica.com/docs/Checksums/11.0.0/${VERTICA_VERSION}_sha1sum.txt
  grep vertica-jdbc-${VERTICA_VERSION}.jar ${VERTICA_VERSION}_sha1sum.txt | sha1sum -c
  ) || exit $?
 fi
