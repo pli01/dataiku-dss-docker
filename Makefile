@@ -47,14 +47,15 @@ build-debian:
 build-dkumonitor:
 	docker-compose ${DC_DSS_BUILD_CONF} build --force-rm --no-cache dkumonitor
 
-registry-login:
+check-registry-login:
 	@if [ -z "${DOCKER_REGISTRY_TOKEN}" -a -z "${DOCKER_REGISTRY_USERNAME}" ] ; then echo "ERROR: DOCKER_REGISTRY_TOKEN and DOCKER_REGISTRY_USERNAME not defined" ; exit 1 ; fi
+registry-login:
 	@[ -n "${DOCKER_REGISTRY_TOKEN}" -a -n "${DOCKER_REGISTRY_USERNAME}" ] && echo "${DOCKER_REGISTRY_TOKEN}" | docker login ${DOCKER_REGISTRY} -u ${DOCKER_REGISTRY_USERNAME}  --password-stdin
 
 registry-logout:
 	@[ -n "${DOCKER_REGISTRY}" ] && docker logout ${DOCKER_REGISTRY} || true
 
-push-image: registry-login push-image-dss push-image-dkumonitor
+push-image: check-registry-login registry-login push-image-dss push-image-dkumonitor
 push-image-%:
 	image_name=$$(docker-compose $(DC_DSS_BUILD_CONF) config | python -c 'import sys, yaml, json; cfg = json.loads(json.dumps(yaml.load(sys.stdin, Loader=yaml.SafeLoader), sys.stdout, indent=4)); print cfg["services"]["$*"]["image"]') ; \
          docker tag $$image_name ${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/$$image_name ; \
