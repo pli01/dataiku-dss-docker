@@ -37,7 +37,6 @@ endif
 endif
 
 
-
 # build custom dss image with custom args installer
 build-all: build build-dkumonitor
 build:
@@ -62,9 +61,13 @@ push-image-%:
          docker push ${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/$$image_name
 pull-image: registry-login pull-image-dss pull-image-dkumonitor
 pull-image-%:
+	if [ -n "${PULL_IMAGE_ENABLE}" -a "X${PULL_IMAGE_ENABLE}" == "Xtrue" ] ; then \
 	image_name=$$(docker-compose $(DC_DSS_BUILD_CONF) config | python -c 'import sys, yaml, json; cfg = json.loads(json.dumps(yaml.load(sys.stdin, Loader=yaml.SafeLoader), sys.stdout, indent=4)); print cfg["services"]["$*"]["image"]') ; \
          docker pull ${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/$$image_name ; \
-         docker tag ${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/$$image_name $$image_name
+         docker tag ${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/$$image_name $$image_name ; \
+        else \
+         echo "Pull image disable" ; \
+        fi
 
 # up/down
 network:
