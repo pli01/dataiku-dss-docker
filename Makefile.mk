@@ -34,6 +34,7 @@ DC_DSS_RUN_CONF += -f ${DC_DSS_CUSTOM_CONF}
 endif
 
 # Default registry
+PULL_IMAGE_ENABLE ?= true
 DOCKER_REGISTRY   := ghcr.io
 DOCKER_REPOSITORY := pli01/dataiku-dss-docker
 
