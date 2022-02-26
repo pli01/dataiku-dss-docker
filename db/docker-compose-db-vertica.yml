@@ -1,0 +1,33 @@
+version: '3.5'
+
+networks:
+  dss-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+
+services:
+  vertica:
+    image: vertica/vertica-ce:${VERTICA_VERSION:-11.0.0-0}
+    container_name: ${COMPOSE_PROJECT_NAME}_db_vertica
+    networks:
+      - dss-network
+    volumes:
+      - ${VERTICA_DATADIR:-./data-db-vertica}:/data/
+      - ./vertica/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
+    environment:
+      - http_proxy=${http_proxy}
+      - https_proxy=${https_proxy}
+      - no_proxy=${no_proxy}
+      - APP_DB_USER=${VERTICA_USER:-newdbadmin}
+      - APP_DB_PASSWORD=${VERTICA_PASSWORD:-vertica}
+      - TZ=Europe/Paris
+    ports:
+      - "5433:5433"
+#      - "5434:5434"
+      - "5444:5444"
+#      - "5450:5450"
+#      - "4803:4803"
+#      - "4804:4804"
+#      - "6543:6543"
+#      - "2222:22"

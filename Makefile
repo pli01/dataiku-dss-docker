@@ -96,6 +96,8 @@ clean-data-dir: clean-data-dir-design clean-data-dir-automation clean-data-dir-a
 #
 # manage db
 #
+vertica: up-db-vertica
+	@echo $@
 pre-up-db-%: create-data-dir-db-%
 	echo "# pre up db $*"
 create-data-dir-db-%:
